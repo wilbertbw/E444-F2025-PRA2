@@ -27,8 +27,13 @@ def index():
     if old_email is not None and old_email != form.email.data:
       flash("You have changed your email.")
     
-    session['name'] = form.name.data
-    session['email'] = form.email.data
+    if form.email.data.find("utoronto") == -1:
+      session['name'] = form.name.data
+      session['email'] = "invalid"
+    else:
+      session['name'] = form.name.data
+      session['email'] = form.email.data
+
     return redirect(url_for('index'))
   
   return render_template('index.html', form=form, name=session.get('name'), email=session.get('email'))
